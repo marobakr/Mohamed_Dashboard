@@ -1,0 +1,173 @@
+<h1 mat-dialog-title>{{ data.user.id ? "Edit User" : "Create User" }}</h1>
+<div mat-dialog-content>
+  <form [formGroup]="userForm" class="user-form">
+    <mat-form-field class="form-field">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" />
+      <mat-error *ngIf="userForm.get('name')?.invalid">
+        {{ getErrorMessage("name") }}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <mat-label>Father Name</mat-label>
+      <input matInput formControlName="father_name" />
+      <mat-error *ngIf="userForm.get('father_name')?.invalid">
+        {{ getErrorMessage("father_name") }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Grandfather Name</mat-label>
+      <input matInput formControlName="grandfather_name" />
+      <mat-error *ngIf="userForm.get('grandfather_name')?.invalid">
+        {{ getErrorMessage("grandfather_name") }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Family Branch Name</mat-label>
+      <input matInput formControlName="family_branch_name" />
+      <mat-error *ngIf="userForm.get('family_branch_name')?.invalid">
+        {{ getErrorMessage("family_branch_name") }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Tribe</mat-label>
+      <input matInput formControlName="tribe" />
+      <mat-error *ngIf="userForm.get('tribe')?.invalid">
+        {{ getErrorMessage("tribe") }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Gender</mat-label>
+      <mat-select formControlName="gender">
+        <mat-option value="female">Female</mat-option>
+        <mat-option value="male">Male</mat-option>
+      </mat-select>
+      <mat-error *ngIf="userForm.get('gender')?.invalid">
+        {{ getErrorMessage("gender") }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Date of Birth</mat-label>
+      <input matInput formControlName="date_of_birth" type="date" />
+      <mat-error *ngIf="userForm.get('date_of_birth')?.invalid">
+        {{ getErrorMessage("date_of_birth") }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Country ID</mat-label>
+      <mat-select formControlName="country_id">
+        <mat-option *ngFor="let country of countries" [value]="country.id">
+          {{ country.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="userForm.get('country_id')?.invalid">
+        {{ getErrorMessage("country_id") }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Phone</mat-label>
+      <input matInput formControlName="phone" />
+      <mat-error *ngIf="userForm.get('phone')?.invalid">
+        {{ getErrorMessage("phone") }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email" />
+      <mat-error *ngIf="userForm.get('email')?.invalid">
+        {{ getErrorMessage("email") }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Type</mat-label>
+      <input matInput formControlName="type" />
+      <mat-error *ngIf="userForm.get('type')?.invalid">
+        {{ getErrorMessage("type") }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Code</mat-label>
+      <input matInput formControlName="code" />
+      <mat-error *ngIf="userForm.get('code')?.invalid">
+        {{ getErrorMessage("code") }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Verified At</mat-label>
+      <input matInput formControlName="verified_at" type="date" />
+      <mat-error *ngIf="userForm.get('verified_at')?.invalid">
+        {{ getErrorMessage("verified_at") }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Created At</mat-label>
+      <input matInput formControlName="created_at" type="date" />
+      <mat-error *ngIf="userForm.get('created_at')?.invalid">
+        {{ getErrorMessage("created_at") }}
+      </mat-error>
+    </mat-form-field>
+
+    <div class="form-field">
+      <label for="image" class="file-input-label">Choose Image</label>
+      <input
+        type="file"
+        id="image"
+        (change)="onFileSelected($event)"
+        class="file-input"
+      />
+      <mat-error
+        *ngIf="userForm.get('image')?.invalid && userForm.get('image')?.touched"
+      >
+        {{ getErrorMessage("image") }}
+      </mat-error>
+    </div>
+
+    <mat-form-field class="form-field">
+      <mat-label>Active</mat-label>
+      <mat-select formControlName="active">
+        <mat-option [value]="1">Active</mat-option>
+        <mat-option [value]="0">Inactive</mat-option>
+      </mat-select>
+      <mat-error *ngIf="userForm.get('active')?.invalid">
+        {{ getErrorMessage("active") }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- <mat-checkbox formControlName="is_premium" class="form-field"
+      >Is Premium</mat-checkbox
+    > -->
+    <mat-form-field class="form-field">
+      <mat-label>Active</mat-label>
+      <mat-select formControlName="is_premium">
+        <mat-option [value]="1">is_premium</mat-option>
+        <mat-option [value]="0">not_premium</mat-option>
+      </mat-select>
+      <mat-error *ngIf="userForm.get('is_premium')?.invalid">
+        {{ getErrorMessage("is_premium") }}
+      </mat-error>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+
+  <button
+    mat-button
+    [mat-dialog-close]="userForm.value"
+    [disabled]="!userForm.valid"
+  >
+    Save
+  </button>
+</div>

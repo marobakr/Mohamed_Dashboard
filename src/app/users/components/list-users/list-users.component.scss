@@ -1,0 +1,34 @@
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.full-width {
+  width: 100%;
+}
+/* Style the table to be responsive */
+table {
+  width: 100%;
+  min-width: 600px; /* Adjust this value as needed */
+}
+
+th.mat-header-cell,
+td.mat-cell {
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .table-container {
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    min-width: 600px; /* Adjust this value as needed */
+  }
+
+  th.mat-header-cell,
+  td.mat-cell {
+    white-space: nowrap;
+  }
+}

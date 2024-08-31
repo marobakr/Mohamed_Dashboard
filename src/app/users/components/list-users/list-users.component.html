@@ -1,0 +1,178 @@
+<div class="mat-elevation-z8">
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. name" />
+  </mat-form-field>
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+        <td mat-cell *matCellDef="let user">{{ user.id }}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <td mat-cell *matCellDef="let user">{{ user.name }}</td>
+      </ng-container>
+
+      <!-- Father Name Column -->
+      <ng-container matColumnDef="father_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Father Name</th>
+        <td mat-cell *matCellDef="let user">
+          {{ user.father_name || "N/A" }}
+        </td>
+      </ng-container>
+
+      <!-- Grandfather Name Column -->
+      <ng-container matColumnDef="grandfather_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Grandfather Name
+        </th>
+        <td mat-cell *matCellDef="let user">
+          {{ user.grandfather_name || "N/A" }}
+        </td>
+      </ng-container>
+
+      <!-- Action Column -->
+      <!-- <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let user">
+          <button
+            mat-icon-button
+            color="primary"
+            (click)="openEditDialog(user)"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteUser(user)">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button mat-icon-button (click)="toggleActivation(user)">
+            <mat-icon>{{ user.active ? "toggle_on" : "toggle_off" }}</mat-icon>
+          </button>
+        </td>
+      </ng-container> -->
+      <!-- Family Branch Name Column -->
+      <ng-container matColumnDef="family_branch_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Family Branch Name
+        </th>
+        <td mat-cell *matCellDef="let user">
+          {{ user.family_branch_name || "N/A" }}
+        </td>
+      </ng-container>
+
+      <!-- Tribe Column -->
+      <ng-container matColumnDef="tribe">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Tribe</th>
+        <td mat-cell *matCellDef="let user">{{ user.tribe || "N/A" }}</td>
+      </ng-container>
+
+      <!-- Image Column -->
+      <ng-container matColumnDef="image">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Image</th>
+        <td mat-cell *matCellDef="let user">
+          <img
+            [src]="user.image"
+            alt="{{ user.name }}"
+            width="50"
+            *ngIf="user.image; else noImage"
+          />
+        </td>
+        <ng-template #noImage>No Image</ng-template>
+      </ng-container>
+
+      <!-- Gender Column -->
+      <ng-container matColumnDef="gender">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Gender</th>
+        <td mat-cell *matCellDef="let user">
+          {{ user.gender || "N/A" }}
+        </td>
+      </ng-container>
+
+      <!-- Date of Birth Column -->
+      <ng-container matColumnDef="date_of_birth">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Date of Birth</th>
+        <td mat-cell *matCellDef="let user">
+          {{ user.date_of_birth | date : "MMM d, yyyy" }}
+        </td>
+      </ng-container>
+
+      <!-- Country Column -->
+      <ng-container matColumnDef="country">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Country</th>
+        <td mat-cell *matCellDef="let user">
+          {{ user.country?.name || "N/A" }}
+        </td>
+      </ng-container>
+
+      <!-- Phone Column -->
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone</th>
+        <td mat-cell *matCellDef="let user">{{ user.phone || "N/A" }}</td>
+      </ng-container>
+
+      <!-- Email Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+        <td mat-cell *matCellDef="let user">{{ user.email || "N/A" }}</td>
+      </ng-container>
+
+      <!-- Type Column -->
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
+        <td mat-cell *matCellDef="let user">{{ user.type || "N/A" }}</td>
+      </ng-container>
+
+      <!-- Active Column -->
+      <ng-container matColumnDef="active">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Active</th>
+        <td mat-cell *matCellDef="let user">{{ user.active }}</td>
+      </ng-container>
+
+      <!-- Is Premium Column -->
+      <ng-container matColumnDef="is_premium">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Is Premium</th>
+        <td mat-cell *matCellDef="let user">{{ user.is_premium }}</td>
+      </ng-container>
+
+      <!-- Created At Column -->
+      <ng-container matColumnDef="created_at">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Created At</th>
+        <td mat-cell *matCellDef="let user">
+          {{ user.created_at | date }}
+        </td>
+      </ng-container>
+
+      <!-- Updated At Column -->
+      <ng-container matColumnDef="updated_at">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Updated At</th>
+        <td mat-cell *matCellDef="let user">
+          {{ user.updated_at | date }}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+  <mat-paginator
+    [length]="totalUsers"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+    (page)="onPageChange($event)"
+  ></mat-paginator>
+
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="openCreateDialog()"
+    class="w-100"
+  >
+    Create User
+  </button>
+</div>
+<notifier-container></notifier-container>

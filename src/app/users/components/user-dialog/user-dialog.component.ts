@@ -39,7 +39,6 @@ export class UserDialogComponent {
         grandfather_name: [''],
         family_branch_name: ['', ,],
         tribe: [''],
-        image: [Validators.required],
         gender: ['', Validators.required],
         date_of_birth: ['', Validators.required],
         country_id: ['', Validators.required],
@@ -48,7 +47,7 @@ export class UserDialogComponent {
           data.user?.phone || '',
           Validators.compose([
             Validators.required,
-            Validators.pattern(/\d{8}$/),
+            Validators.pattern(/^50\d{7}$/),
           ]),
         ],
         phone_code: [''],
@@ -159,3 +158,6 @@ export class UserDialogComponent {
     return null;
   }
 }
+password: 'A102030';
+phone: '500004002';
+phone_code: '966';

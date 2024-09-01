@@ -174,24 +174,6 @@
         {{ getErrorMessage("is_premium") }}
       </mat-error>
     </mat-form-field>
-
-    <div class="form-field">
-      <label for="image" class="file-input-label">Choose Image</label>
-      <input
-        type="file"
-        id="image"
-        (change)="onFileSelected($event)"
-        class="file-input"
-      />
-      <mat-error
-        *ngIf="userForm.get('image')?.invalid && userForm.get('image')?.touched"
-      >
-        {{ getErrorMessage("image") }}
-      </mat-error>
-      <mat-hint class="px-1" *ngIf="imageUploaded"
-        >Image was uploaded successfully</mat-hint
-      >
-    </div>
   </form>
 </div>
 <div mat-dialog-actions>

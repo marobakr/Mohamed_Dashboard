@@ -42,6 +42,7 @@ export class ListUsersComponent implements OnInit {
   totalUsers = 0;
   pageSize = 10;
   currentPage = 0;
+  prevDataUser!: IUserList;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -49,7 +50,7 @@ export class ListUsersComponent implements OnInit {
     private usersService: UsersService,
     private dialog: MatDialog,
     private datePipe: DatePipe,
-    private NotifierService: NotifierService
+    private notifierService: NotifierService
   ) {}
 
   ngOnInit() {
@@ -92,7 +93,7 @@ export class ListUsersComponent implements OnInit {
       if (result) {
         const formattedDate = this.datePipe.transform(
           result.date_of_birth,
-          'MMM d, yyyy'
+          'yyyy-MM-dd'
         );
         const formData = {
           ...result,
@@ -102,10 +103,10 @@ export class ListUsersComponent implements OnInit {
         this.usersService.createUser(formData).subscribe(
           () => {
             this.loadUsers();
-            this.NotifierService.notify('success', 'User created successfully');
+            this.notifierService.notify('success', 'User created successfully');
           },
           (error) => {
-            this.NotifierService.notify('error', error.error.message);
+            this.notifierService.notify('error', error.error.message);
             console.error('error', error);
           }
         );
@@ -113,32 +114,50 @@ export class ListUsersComponent implements OnInit {
     });
   }
 
-  // openEditDialog(user: IUserList): void {
-  //   const dialogRef = this.dialog.open(UserDialogComponent, {
-  //     width: '250px',
-  //     data: { user },
-  //   });
+  getPrevDataUser(userId: number, callback: (user: IUserList) => void): void {
+    this.usersService.getUserById(userId).subscribe((response) => {
+      this.prevDataUser = response.data;
+      callback(this.prevDataUser);
+      console.log(this.prevDataUser);
+    });
+  }
 
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     console.log(result);
-  //     if (result) {
-  //       this.usersService.updateUser(result).subscribe(() => {
-  //         this.loadUsers();
-  //       });
-  //     }
-  //   });
-  // }
+  openUpdateDialog(userId: number): void {
+    this.getPrevDataUser(userId, (user) => {
+      console.log(user);
+      const dialogRef = this.dialog.open(UserDialogComponent, {
+        width: '75%',
+        data: { user },
+      });
 
-  // deleteUser(user: IUserList): void {
-  //   this.usersService.deleteUser(user.id).subscribe(() => {
-  //     this.loadUsers();
-  //   });
-  // }
-
-  // toggleActivation(user: IUserList): void {
-  //   user.active = user.active ? 0 : 1;
-  //   this.usersService.updateUser(user).subscribe(() => {
-  //     this.loadUsers();
-  // });
-  // }
+      dialogRef.afterClosed().subscribe((result) => {
+        console.log('result', result);
+        if (result) {
+          const formattedDate = this.datePipe.transform(
+            result.date_of_birth,
+            'yyyy-MM-dd'
+          );
+          const formData = {
+            ...result,
+            date_of_birth: formattedDate,
+          };
+          console.log('formData', formData);
+          this.usersService.updateUser(formData, user.id).subscribe(
+            (respons) => {
+              console.log('respons', respons);
+              this.loadUsers();
+              this.notifierService.notify(
+                'success',
+                'User updated successfully'
+              );
+            },
+            (error) => {
+              this.notifierService.notify('error', error.error.message);
+              console.error('error', error);
+            }
+          );
+        }
+      });
+    });
+  }
 }

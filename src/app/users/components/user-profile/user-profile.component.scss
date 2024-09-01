@@ -1,0 +1,34 @@
+.user-profile-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.user-profile-card {
+  width: 100%;
+  max-width: 800px;
+}
+
+.user-profile-image {
+  width: 150px;
+  background-size: cover;
+  background-position: center;
+}
+
+.mat-card-header {
+  align-items: center;
+}
+
+.mat-card-title,
+.mat-card-subtitle {
+  margin-left: 16px;
+}
+
+table {
+  width: 100%;
+}
+
+th.mat-header-cell,
+td.mat-cell {
+  padding: 8px;
+}

@@ -6,7 +6,7 @@ export interface IUserList {
   family_branch_name: string;
   tribe: string;
   image: string;
-  gender: 'string';
+  gender: string;
   date_of_birth: string;
   country_id: number;
   phone: string;

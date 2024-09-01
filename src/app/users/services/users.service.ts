@@ -18,8 +18,8 @@ export class UsersService {
     return this.http.get<any>(this.apiUrl, { params });
   }
 
-  getUserById(id: number): Observable<IUserList> {
-    return this.http.get<IUserList>(`${this.apiUrl}/${id}`);
+  getUserById(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${id}`);
   }
 
   createUser(user: IUserList): Observable<IUserList> {
@@ -27,9 +27,11 @@ export class UsersService {
   }
 
   updateUser(user: IUserList): Observable<IUserList> {
-    return this.http.put<IUserList>(`${this.apiUrl}/${user.id}`, user);
+    return this.http.put<IUserList>(`${this.apiUrl}/${user.id}/edit`, user);
   }
-  deleteUser(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  getCountries(): Observable<any> {
+    return this.http.get(
+      `https://system.osolna.com/api/countries?return_all=1`
+    );
   }
 }

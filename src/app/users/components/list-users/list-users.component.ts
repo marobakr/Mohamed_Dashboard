@@ -2,9 +2,9 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { NotifierService } from 'angular-notifier';
 import { IUserList } from 'src/app/core/interface/IUserList';
 import { UsersService } from '../../services/users.service';
 import { UserDialogComponent } from '../user-dialog/user-dialog.component';
@@ -34,6 +34,8 @@ export class ListUsersComponent implements OnInit {
     'is_premium',
     'created_at',
     'updated_at',
+    'actions',
+    'Update',
   ];
   dataSource!: MatTableDataSource<IUserList>;
   userList: IUserList[] = [];
@@ -47,7 +49,7 @@ export class ListUsersComponent implements OnInit {
     private usersService: UsersService,
     private dialog: MatDialog,
     private datePipe: DatePipe,
-    private snackBar: MatSnackBar
+    private NotifierService: NotifierService
   ) {}
 
   ngOnInit() {
@@ -62,7 +64,6 @@ export class ListUsersComponent implements OnInit {
         this.dataSource = new MatTableDataSource(data.data.data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-        console.log(data);
       });
   }
 
@@ -97,51 +98,47 @@ export class ListUsersComponent implements OnInit {
           ...result,
           date_of_birth: formattedDate,
         };
-
+        console.error(formData);
         this.usersService.createUser(formData).subscribe(
-          (params) => {
+          () => {
             this.loadUsers();
-            this.snackBar.open('User created successfully!', 'Close', {
-              duration: 3000,
-              panelClass: ['success-snackbar'],
-            });
+            this.NotifierService.notify('success', 'User created successfully');
           },
           (error) => {
-            this.snackBar.open('Failed to create user.', 'Close', {
-              duration: 3000,
-              panelClass: ['error-snackbar'],
-            });
+            this.NotifierService.notify('error', error.error.message);
+            console.error('error', error);
           }
         );
       }
     });
   }
 
-  openEditDialog(user: IUserList): void {
-    const dialogRef = this.dialog.open(UserDialogComponent, {
-      width: '250px',
-      data: { user },
-    });
+  // openEditDialog(user: IUserList): void {
+  //   const dialogRef = this.dialog.open(UserDialogComponent, {
+  //     width: '250px',
+  //     data: { user },
+  //   });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.usersService.updateUser(result).subscribe(() => {
-          this.loadUsers();
-        });
-      }
-    });
-  }
+  //   dialogRef.afterClosed().subscribe((result) => {
+  //     console.log(result);
+  //     if (result) {
+  //       this.usersService.updateUser(result).subscribe(() => {
+  //         this.loadUsers();
+  //       });
+  //     }
+  //   });
+  // }
 
-  deleteUser(user: IUserList): void {
-    this.usersService.deleteUser(user.id).subscribe(() => {
-      this.loadUsers();
-    });
-  }
+  // deleteUser(user: IUserList): void {
+  //   this.usersService.deleteUser(user.id).subscribe(() => {
+  //     this.loadUsers();
+  //   });
+  // }
 
-  toggleActivation(user: IUserList): void {
-    user.active = user.active ? 0 : 1;
-    this.usersService.updateUser(user).subscribe(() => {
-      this.loadUsers();
-    });
-  }
+  // toggleActivation(user: IUserList): void {
+  //   user.active = user.active ? 0 : 1;
+  //   this.usersService.updateUser(user).subscribe(() => {
+  //     this.loadUsers();
+  // });
+  // }
 }

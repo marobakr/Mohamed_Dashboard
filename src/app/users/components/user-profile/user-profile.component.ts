@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { IUserList } from 'src/app/core/interface/IUserList';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { UsersService } from '../../services/users.service';
 
 @Component({
@@ -8,27 +7,68 @@ import { UsersService } from '../../services/users.service';
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss'],
 })
-export class UserProfileComponent {
-  user: IUserList | undefined;
+export class UserProfileComponent implements OnInit {
+  user: any;
+  displayedColumns: string[] = ['icon', 'label', 'value'];
+  userDetails: any[] = [];
+  defaultImage = '../../../../assets/logo.png';
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
-    private usersService: UsersService
+    private userService: UsersService
   ) {}
 
   ngOnInit(): void {
     const userId = this.route.snapshot.paramMap.get('id');
     if (userId) {
-      this.usersService.getUserById(+userId).subscribe((user) => {
-        this.user = user;
+      this.userService.getUserById(+userId).subscribe((user) => {
+        this.user = user.data;
+        this.userDetails = [
+          {
+            icon: 'person',
+            label: "Father's Name",
+            value: this.user.father_name,
+          },
+          {
+            icon: 'person',
+            label: "Grandfather's Name",
+            value: this.user.grandfather_name,
+          },
+          {
+            icon: 'group',
+            label: 'Family Branch Name',
+            value: this.user.family_branch_name,
+          },
+          { icon: 'group', label: 'Tribe', value: this.user.tribe },
+          { icon: 'phone', label: 'Phone', value: this.user.phone },
+          { icon: 'email', label: 'Email', value: this.user.email },
+          {
+            icon: 'calendar_today',
+            label: 'Date of Birth',
+            value: this.user.date_of_birth,
+          },
+          {
+            icon: 'location_on',
+            label: 'Country',
+            value: this.user.country.currency_name,
+          },
+          {
+            icon: 'verified_this.user',
+            label: 'Verified At',
+            value: this.user.verified_at,
+          },
+          {
+            icon: 'access_time',
+            label: 'Created At',
+            value: this.user.created_at,
+          },
+          { icon: 'update', label: 'Updated At', value: this.user.updated_at },
+        ];
       });
     }
   }
 
-  editUser(): void {
-    if (this.user) {
-      this.router.navigate(['/users/edit', this.user.id]);
-    }
+  onImageError(event: Event): void {
+    (event.target as HTMLImageElement).src = this.defaultImage;
   }
 }

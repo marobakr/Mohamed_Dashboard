@@ -1,1 +1,1 @@
-export const baseApi = 'https://system.osolna.com/api';
+export const MainApi = 'https://system.osolna.com/api';

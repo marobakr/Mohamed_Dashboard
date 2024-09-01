@@ -53,11 +53,6 @@ export class UserProfileComponent implements OnInit {
             value: this.user.country.currency_name,
           },
           {
-            icon: 'verified_this.user',
-            label: 'Verified At',
-            value: this.user.verified_at,
-          },
-          {
             icon: 'access_time',
             label: 'Created At',
             value: this.user.created_at,

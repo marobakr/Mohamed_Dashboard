@@ -113,25 +113,20 @@ export class ListUsersComponent implements OnInit {
       }
     });
   }
-
   getPrevDataUser(userId: number, callback: (user: IUserList) => void): void {
     this.usersService.getUserById(userId).subscribe((response) => {
       this.prevDataUser = response.data;
       callback(this.prevDataUser);
-      console.log(this.prevDataUser);
     });
   }
-
   openUpdateDialog(userId: number): void {
     this.getPrevDataUser(userId, (user) => {
-      console.log(user);
       const dialogRef = this.dialog.open(UserDialogComponent, {
         width: '75%',
         data: { user },
       });
 
       dialogRef.afterClosed().subscribe((result) => {
-        console.log('result', result);
         if (result) {
           const formattedDate = this.datePipe.transform(
             result.date_of_birth,
@@ -141,10 +136,8 @@ export class ListUsersComponent implements OnInit {
             ...result,
             date_of_birth: formattedDate,
           };
-          console.log('formData', formData);
           this.usersService.updateUser(formData, user.id).subscribe(
             (respons) => {
-              console.log('respons', respons);
               this.loadUsers();
               this.notifierService.notify(
                 'success',

@@ -146,14 +146,6 @@
     </mat-form-field>
 
     <mat-form-field class="form-field">
-      <mat-label>Verified At</mat-label>
-      <input matInput formControlName="verified_at" type="date" />
-      <mat-error *ngIf="userForm.get('verified_at')?.invalid">
-        {{ getErrorMessage("verified_at") }}
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field class="form-field">
       <mat-label>Active</mat-label>
       <mat-select formControlName="active">
         <mat-option [value]="1">Active</mat-option>

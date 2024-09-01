@@ -1,19 +1,40 @@
-// login.component.ts
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import { AuthService } from '../services/auth.service';
 
+/**
+ * The LoginComponent class handles user login functionality.
+ * It provides a form for users to input their credentials and
+ * handles validation and submission of the login form.
+ */
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
+  /**
+   * The form group for the login form.
+   * This form includes controls for `username` and `password` with validators.
+   */
   loginForm: FormGroup;
+
+  /**
+   * A flag to toggle the visibility of the password field.
+   * When true, the password is hidden.
+   */
   hidePassword: boolean = true;
 
+  /**
+   * Creates an instance of LoginComponent.
+   *
+   * @param fb - FormBuilder for constructing the login form.
+   * @param router - Router service for navigation after a successful login.
+   * @param authService - AuthService for handling authentication.
+   * @param notifierService - NotifierService for displaying notifications to the user.
+   */
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -34,14 +55,27 @@ export class LoginComponent {
     });
   }
 
+  /**
+   * Getter for the `username` form control.
+   */
   get username() {
     return this.loginForm.get('username');
   }
 
+  /**
+   * Getter for the `password` form control.
+   */
   get password() {
     return this.loginForm.get('password');
   }
 
+  /**
+   * Retrieves an appropriate error message based on the validation errors
+   * for the specified form control.
+   *
+   * @param controlName - The name of the form control to check for errors (e.g., 'username', 'password').
+   * @returns A string representing the error message, or an empty string if no error exists.
+   */
   getErrorMessage(controlName: string): string {
     const control = this.loginForm.get(controlName);
     if (control?.hasError('required')) {
@@ -68,17 +102,25 @@ export class LoginComponent {
     return '';
   }
 
+  /**
+   * Toggles the visibility of the password field.
+   * When invoked, it changes the value of `hidePassword` to show or hide the password.
+   */
   togglePasswordVisibility() {
     this.hidePassword = !this.hidePassword;
   }
 
+  /**
+   * Handles the form submission.
+   * If the form is valid, it attempts to log the user in using the AuthService.
+   * On success, the user is redirected to the `/users` page.
+   * On failure, an error notification is displayed.
+   */
   onSubmit() {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
       this.authService.login(this.loginForm.value).subscribe(
-        (res) => {
+        () => {
           this.router.navigate(['/users']);
-          console.log(res);
         },
         () => this.notifierService.notify('error', 'Invalid login credentials')
       );

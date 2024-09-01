@@ -32,38 +32,34 @@ export class UserDialogComponent {
     private fb: FormBuilder,
     private usersService: UsersService
   ) {
-    this.userForm = this.fb.group(
-      {
-        name: ['', Validators.required],
-        father_name: [''],
-        grandfather_name: [''],
-        family_branch_name: ['', ,],
-        tribe: [''],
-        gender: ['', Validators.required],
-        date_of_birth: ['', Validators.required],
-        country_id: ['', Validators.required],
-        country_code: ['', Validators.required],
-        phone: [
-          data.user?.phone || '',
-          Validators.compose([
-            Validators.required,
-            Validators.pattern(/^50\d{7}$/),
-          ]),
-        ],
-        phone_code: [''],
-        email: ['', [Validators.required, Validators.email]],
-        type: [''],
-        active: [false],
-        is_premium: [false],
-        verified_at: [''],
-        created_at: [''],
-        updated_at: [''],
-        country: [''],
-        password: ['', [Validators.required, Validators.minLength(6)]],
-        confirm_password: ['', Validators.required],
-      },
-      { validator: this.passwordMatchValidator }
-    );
+    this.userForm = this.fb.group({
+      id: [data.user.id],
+      name: [data.user.name || '', Validators.required],
+      father_name: [data.user.father_name || ''],
+      grandfather_name: [data.user.grandfather_name || ''],
+      family_branch_name: [data.user.family_branch_name || ''],
+      tribe: [data.user.tribe || ''],
+      gender: [data.user.gender || '', Validators.required],
+      date_of_birth: [data.user.date_of_birth || '', Validators.required],
+      country_id: [data.user.country_id || '', Validators.required],
+      country_code: [data.user.country_code || '', Validators.required],
+      phone: [
+        data.user.phone || '',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern(/^50\d{7}$/),
+        ]),
+      ],
+      phone_code: [data.user.phone_code || '', Validators.required],
+      email: [data.user.email || '', [Validators.required, Validators.email]],
+      type: [data.user.type || '', Validators.required],
+      active: [data.user.active || false, Validators.required],
+      is_premium: [data.user.is_premium || false, Validators.required],
+      created_at: [data.user.created_at || ''],
+      password: [data.user.password || '', Validators.required],
+      confirm_password: ['', Validators.required],
+      code: [data.user.code || ''],
+    });
   }
 
   ngOnInit(): void {
@@ -140,7 +136,6 @@ export class UserDialogComponent {
     } else {
       console.warn('No file selected or file list is empty.');
     }
-    console.log(this.userForm.value);
   }
 
   passwordMatchValidator(
@@ -158,6 +153,3 @@ export class UserDialogComponent {
     return null;
   }
 }
-password: 'A102030';
-phone: '500004002';
-phone_code: '966';

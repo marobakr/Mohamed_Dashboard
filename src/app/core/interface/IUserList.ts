@@ -14,8 +14,10 @@ export interface IUserList {
   type: string;
   active: number;
   is_premium: number;
+  country_code: string;
+  phone_code: string;
+  password: string;
   code: any;
-  verified_at: any;
   created_at: string;
   updated_at: string;
   country: Country;

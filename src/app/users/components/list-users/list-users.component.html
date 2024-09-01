@@ -1,6 +1,6 @@
 <div class="mat-elevation-z8">
   <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Filter</mat-label>
+    <mat-label>Filter By (Name,id,etc) </mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Ex. name" />
   </mat-form-field>
   <div class="table-container">
@@ -179,11 +179,12 @@
     mat-raised-button
     color="primary"
     (click)="openCreateDialog()"
-    class="w-100"
+    class="w-100 my-3"
   >
     Create User
   </button>
 </div>
+
 <notifier-container></notifier-container>
 <ngx-spinner
   bdColor="rgba(0, 0, 0, 0.8)"

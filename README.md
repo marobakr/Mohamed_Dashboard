@@ -1,27 +1,80 @@
-# Dashboard
+# Angular Dashboard Application
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.15.
+## Project Overview
 
-## Development server
+This project is a dashboard application built using Angular 16+. It is designed to demonstrate a modular architecture with a focus on best practices in component design, routing, services, state management, and API integration.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+The application consists of two main modules:
 
-## Code scaffolding
+### Auth Module
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Login Component:** A login form that authenticates users against a provided endpoint.
+- **Redirection:** On successful login, redirects the user to the Users module.
 
-## Build
+### Users Module
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- **List Users Component:** Displays a list of users with functionality to sort, filter, create, update, delete, and manage user activation status.
+- **User Profile Component:** Displays detailed information about a specific user.
+- **Create/Update User Component:** Provides a form to create new users or update existing users with validation and error handling.
 
-## Running unit tests
+## Features
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- **Lazy Loading:** The application uses lazy loading for better performance and modularity.
+- **Reactive Forms:** Forms are managed using Angular Reactive Forms for validation and error handling.
+- **API Integration:** The application interacts with real endpoints for authentication and data management.
 
-## Running end-to-end tests
+- **Angular Material UI:** The UI is designed using Angular Material components.
+- **Routing:** Implemented for seamless navigation between different components.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Technical Uses
 
-## Further help
+- **Angular Version:** 16+
+- **Project Setup:** Managed using Angular CLI.
+- **Forms:** Handled using Angular Reactive Forms.
+- **Routing:** Implemented for navigation between components.
+- **UI Library:** Angular Material And Bootstrap for layout and design.
+- **Code Quality:** Adheres to SOLID principles and Angular best practices.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Setup and Installation
+
+### Prerequisites
+
+- **Node.js:** Ensure you have Node.js installed on your machine. You can download it [here](https://nodejs.org/).
+- **Angular CLI:** Install Angular CLI globally using npm:
+
+  ```bash
+  npm install -g @angular/cli
+  ```
+
+### Project Structure
+
+Dashboard Application/
+├── src/
+│ ├── app/
+│ │ ├── auth/
+│ │ │ ├── login/
+│ │ │ ├── services/
+│ │ │ │ ├── auth.service.ts
+│ │ │ ├── auth-routing.module.ts
+│ │ │ ├── auth.module.ts
+│ │ ├── components/
+│ │ │ ├── footer/
+│ │ │ ├── header/
+│ │ ├── core/
+│ │ │ ├── constant/
+│ │ │ ├── guard/
+│ │ │ ├── interceptors/
+│ │ │ │ ├── loading.interceptor.ts
+│ │ │ ├── interface/
+│ │ ├── users/
+│ │ │ ├── components/
+│ │ │ │ ├── list-users/
+│ │ │ │ ├── user-dialog/
+│ │ │ │ ├── user-profile/
+│ │ │ ├── services/
+│ │ │ │ ├── users.service.ts
+│ │ │ ├── users-routing.module.ts
+│ │ │ ├── users.module.ts
+├── angular.json
+├── package.json
+├── README.md

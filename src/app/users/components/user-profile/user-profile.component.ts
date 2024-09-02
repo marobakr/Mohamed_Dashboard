@@ -2,22 +2,49 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UsersService } from '../../services/users.service';
 
+/**
+ * Component for displaying a user's profile information.
+ */
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss'],
 })
 export class UserProfileComponent implements OnInit {
+  /**
+   * Stores the user data retrieved from the server.
+   */
   user: any;
+
+  /**
+   * Array of column names to be displayed in the user details table.
+   */
   displayedColumns: string[] = ['icon', 'label', 'value'];
+
+  /**
+   * Array of user details to be displayed in the user profile.
+   */
   userDetails: any[] = [];
+
+  /**
+   * Default image to be displayed if the user's image fails to load.
+   */
   defaultImage = '../../../../assets/logo.png';
 
+  /**
+   * Constructor for `UserProfileComponent`.
+   * @param route ActivatedRoute for accessing route parameters.
+   * @param userService Service for fetching user data.
+   */
   constructor(
     private route: ActivatedRoute,
     private userService: UsersService
   ) {}
 
+  /**
+   * Lifecycle hook that is called after the component's view has been fully initialized.
+   * Fetches the user ID from the route, retrieves the user data, and sets up the user details.
+   */
   ngOnInit(): void {
     const userId = this.route.snapshot.paramMap.get('id');
     if (userId) {
@@ -63,6 +90,11 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
+  /**
+   * Event handler for when the user's image fails to load.
+   * Replaces the failed image with the default image.
+   * @param event The event object for the error event.
+   */
   onImageError(event: Event): void {
     (event.target as HTMLImageElement).src = this.defaultImage;
   }

@@ -13,25 +13,59 @@ interface CountryOption {
   value: number;
 }
 
+/**
+ * Component for the user dialog. It allows users to add or edit user details.
+ */
 @Component({
   selector: 'app-user-dialog',
   templateUrl: './user-dialog.component.html',
   styleUrls: ['./user-dialog.component.scss'],
 })
 export class UserDialogComponent {
+  /**
+   * Form group for managing user data input.
+   */
   userForm: FormGroup;
+
+  /**
+   * Indicates if an image has been uploaded.
+   */
   imageUploaded = false;
+
+  /**
+   * Stores the path of the uploaded image.
+   */
   imagePath: string | null = null;
+
+  /**
+   * List of country IDs for the dropdown.
+   */
   countries_id: CountryOption[] = [];
+
+  /**
+   * List of phone codes for the dropdown.
+   */
   phoneCodes: CountryOption[] = [];
+
+  /**
+   * List of country codes for the dropdown.
+   */
   countryCodes: CountryOption[] = [];
 
+  /**
+   * Constructor for `UserDialogComponent`.
+   * @param dialogRef Reference to the dialog opened.
+   * @param data Injected data containing the user information.
+   * @param fb FormBuilder for constructing the form group.
+   * @param usersService Service for fetching user-related data.
+   */
   constructor(
     public dialogRef: MatDialogRef<UserDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { user: IUserList },
     private fb: FormBuilder,
     private usersService: UsersService
   ) {
+    // Initialize the user form with the provided data
     this.userForm = this.fb.group({
       id: [data.user.id],
       name: [data.user.name || '', Validators.required],
@@ -62,10 +96,16 @@ export class UserDialogComponent {
     });
   }
 
+  /**
+   * Lifecycle hook that is called after the component's view has been fully initialized.
+   */
   ngOnInit(): void {
     this.getAllCountries();
   }
 
+  /**
+   * Fetches all countries from the service and populates the dropdown options.
+   */
   getAllCountries(): void {
     this.usersService.getCountries().subscribe(
       (response) => {
@@ -82,6 +122,11 @@ export class UserDialogComponent {
       }
     );
   }
+
+  /**
+   * Returns an error message based on the form control's validation state.
+   * @param controlName The name of the form control to check.
+   */
   getErrorMessage(controlName: string): string {
     const control = this.userForm.get(controlName);
     if (control?.hasError('required')) {
@@ -107,37 +152,18 @@ export class UserDialogComponent {
     }
     return '';
   }
+
+  /**
+   * Closes the dialog without saving changes.
+   */
   onCancel(): void {
     this.dialogRef.close();
   }
-  onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      const file = input.files[0];
-      const reader = new FileReader();
 
-      reader.onload = () => {
-        this.imagePath = file.name; // Save the file name as the path
-        this.userForm.patchValue({
-          image: this.imagePath,
-        });
-        const imageControl = this.userForm.get('image');
-        if (imageControl) {
-          imageControl.updateValueAndValidity();
-        }
-        this.imageUploaded = true;
-      };
-
-      reader.onerror = (error) => {
-        console.error('Error reading file:', error);
-      };
-
-      reader.readAsDataURL(file);
-    } else {
-      console.warn('No file selected or file list is empty.');
-    }
-  }
-
+  /**
+   * Validator to check if the password and confirm password fields match.
+   * @param control The form group to validate.
+   */
   passwordMatchValidator(
     control: AbstractControl
   ): { [key: string]: boolean } | null {

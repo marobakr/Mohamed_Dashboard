@@ -17,7 +17,7 @@
     </mat-form-field>
 
     <mat-form-field class="form-field">
-      <mat-label>Grandfather Name</mat-label>
+      <mat-label>Grandfather</mat-label>
       <input matInput formControlName="grandfather_name" />
       <mat-error *ngIf="userForm.get('grandfather_name')?.invalid">
         {{ getErrorMessage("grandfather_name") }}
@@ -25,7 +25,7 @@
     </mat-form-field>
 
     <mat-form-field class="form-field">
-      <mat-label>Family Branch Name</mat-label>
+      <mat-label>Family Branch </mat-label>
       <input matInput formControlName="family_branch_name" />
       <mat-error *ngIf="userForm.get('family_branch_name')?.invalid">
         {{ getErrorMessage("family_branch_name") }}

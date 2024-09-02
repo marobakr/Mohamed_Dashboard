@@ -15,22 +15,17 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { NotifierModule } from 'angular-notifier';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { CreateUpdateUserComponent } from './components/create-update-user/create-update-user.component';
 import { ListUsersComponent } from './components/list-users/list-users.component';
 import { UserDialogComponent } from './components/user-dialog/user-dialog.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { UsersRoutingModule } from './users-routing.module';
 
 @NgModule({
-  declarations: [
-    UserProfileComponent,
-    CreateUpdateUserComponent,
-    ListUsersComponent,
-    UserDialogComponent,
-  ],
+  declarations: [UserProfileComponent, ListUsersComponent, UserDialogComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    UsersRoutingModule,
     MatInputModule,
     MatIconModule,
     MatButtonModule,
@@ -38,7 +33,6 @@ import { UsersRoutingModule } from './users-routing.module';
     MatPaginatorModule,
     MatSortModule,
     MatDialogModule,
-    UsersRoutingModule,
     MatCheckboxModule,
     NgxSpinnerModule,
     NotifierModule,

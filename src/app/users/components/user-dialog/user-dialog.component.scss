@@ -1,32 +1,15 @@
 .user-form {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px; /* Space between form fields */
+  gap: 16px;
 }
 
 .form-field {
-  flex: 1 1 100%; /* Make each form field take full width on small screens */
+  flex: 1 1 100%;
 }
 
-.file-input {
-  display: none;
-}
-
-.file-input-label {
-  display: inline-block;
-  padding: 8px 16px;
-  background-color: #3f51b5;
-  color: white;
-  border-radius: 4px;
-  cursor: pointer;
-  text-align: center;
-}
-
-.file-input-label:hover {
-  background-color: #303f9f;
-}
 @media (min-width: 600px) {
   .form-field {
-    flex: 1 1 calc(50% - 16px); /* Two columns layout on larger screens */
+    flex: 1 1 calc(50% - 16px);
   }
 }

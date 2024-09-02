@@ -2,20 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-
-interface LoginResponse {
-  status: number;
-  data: {
-    token: string;
-  };
-}
+import { MainApi } from 'src/app/core/constant/baseApI';
+import { LoginResponse } from 'src/app/core/interface/auth';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'https://system.osolna.com/api/auth/admin-login';
-
   constructor(private http: HttpClient) {}
 
   login(credentials: {
@@ -27,19 +20,19 @@ export class AuthService {
       password: credentials.password,
       type: 'admin',
     };
-
-    return this.http.post<LoginResponse>(this.apiUrl, body).pipe(
-      tap((response) => {
-        if (response.status === 1) {
-          localStorage.setItem('token', response.data.token);
-        }
-      }),
-      // use intersecport to catch the error
-      catchError((error) => {
-        console.error('Login error:', error);
-        return throwError(error);
-      })
-    );
+    return this.http
+      .post<LoginResponse>(`${MainApi}/auth/admin-login`, body)
+      .pipe(
+        tap((response) => {
+          if (response.status === 1) {
+            localStorage.setItem('token', response.data.token);
+          }
+        }),
+        catchError((error) => {
+          console.error('Login error:', error);
+          return throwError(error);
+        })
+      );
   }
 
   getToken(): string | null {
